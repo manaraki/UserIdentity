@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserIdentity.Domain.Entities.Common;
 
 namespace UserIdentity.Domain.Entities.User
 {
-    public class UserRole
-    {
-        public int UserRoleId { get; set; }
+    public class UserRole: BaseEntity
+    {        
         public int UserId { get; set; }
         public int RoleId { get; set; }
 
