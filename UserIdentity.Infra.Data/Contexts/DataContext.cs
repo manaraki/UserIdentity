@@ -38,6 +38,10 @@ namespace UserIdentity.Infra.Data.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region User
+            modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
+            #endregion
+
             #region Role
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, RoleTiltle = "Admin" });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 2, RoleTiltle = "Product Manager" });
@@ -62,7 +66,7 @@ namespace UserIdentity.Infra.Data.Contexts
             #endregion
 
             #region
-            modelBuilder.Entity<UserRole>().HasData(new UserRole { UserRoleId = 1, UserId = 2, RoleId = 1 });
+            modelBuilder.Entity<UserRole>().HasData(new UserRole { Id = 1, UserId = 2, RoleId = 1 });
             #endregion
         }
     }
