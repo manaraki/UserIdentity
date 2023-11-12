@@ -28,7 +28,7 @@ namespace UserIdentity.Infra.Ioc
             services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>(); 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();   
+              
 
 
         }
