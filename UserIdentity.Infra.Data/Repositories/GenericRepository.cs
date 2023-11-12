@@ -22,7 +22,7 @@ namespace UserIdentity.Infra.Data.Repositories
             _dbSet = _db.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity,bool>> where=null,
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity,bool>> where=null,
             Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderby=null, string includes="") 
         {
             IQueryable<TEntity> query = _dbSet;
@@ -42,7 +42,7 @@ namespace UserIdentity.Infra.Data.Repositories
                     query = query.Include(include);
                 }
             }
-            return await query.ToListAsync();
+            return query.ToList();
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where=null)

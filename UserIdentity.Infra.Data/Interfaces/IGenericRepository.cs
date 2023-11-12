@@ -9,7 +9,7 @@ namespace UserIdentity.Infra.Data.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> where = null,
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> where = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderby = null, string includes = "");
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where = null);
         Task<TEntity> GetByIdAsync(object id);        
