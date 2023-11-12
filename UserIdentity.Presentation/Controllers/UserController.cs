@@ -48,7 +48,7 @@ namespace UserIdentity.Presentation.Controllers
             var response = new ApiResponse<RegisterApiResponse>
             {
                 Message = "Register successful",
-                ResponseStatus = 200,
+                ResponseStatus = 201,
                 Data = new RegisterApiResponse
                 {
                     UserId = userId,

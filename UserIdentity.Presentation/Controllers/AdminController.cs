@@ -7,6 +7,7 @@ using UserIdentity.Application.Dtos;
 using UserIdentity.Application.Interfaces;
 using UserIdentity.Application.Services;
 using UserIdentity.Domain.Entities.User;
+using UserIdentity.Presentation.ApiResponse;
 using UserIdentity.Presentation.Attributes;
 
 namespace UserIdentity.Presentation.Controllers
@@ -25,19 +26,39 @@ namespace UserIdentity.Presentation.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        
-        public IActionResult AdminPanel()
-        {            
-            return Ok("Admin Panel");
-        }
+               
+        [HttpPost("user/add")]       
 
-        [HttpPost("user/add")]        
-       
         public async Task<IActionResult> AddUser(AddUserDto addUserDto)
         {
-            var userId = await _addUserService.Execute(addUserDto);
-            return Ok(userId);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Data");
+            }
+            try
+            {
+                var userId = await _addUserService.Execute(addUserDto);
+                var Response = new ApiResponse<AddUserApiResponse>
+                {
+                    ResponseStatus = 201,
+                    Message = "user added",
+                    Data = new AddUserApiResponse()
+                    {
+                        UserID=userId,
+                    }
+                };
+                return Ok(Response);
+
+            }
+            catch
+            {
+                var Response = new ApiResponse<LoginApiResponse>
+                {
+                    ResponseStatus = 400,
+                    Message = "invalid data"
+                };
+                return BadRequest(Response);
+            }
         }
 
         
