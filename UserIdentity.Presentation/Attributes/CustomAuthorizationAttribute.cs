@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -34,8 +35,13 @@ namespace UserIdentity.Presentation.Attributes
             
             string token = context.HttpContext.Request.Cookies["token"];
             string userId = context.HttpContext.Request.Cookies["userId"];
+            if (token == null)
+            {
+                context.Result = new UnauthorizedResult();
+                return;
+            }
 
-            try 
+            try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]);
@@ -48,20 +54,18 @@ namespace UserIdentity.Presentation.Attributes
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 }, out var validatedToken);
+                //var jwtToken = (JwtSecurityToken)validatedToken;
+                //var userID = jwtToken.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userID = jwtToken.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
             }
             catch
             {
                 context.Result = new UnauthorizedResult();
                 return;
-            }         
-                        
-            
+            }
             
             // Check if the user has the required role
-            var userRoles = await _userService.GetUsersRolesAsync(int.Parse(userId));
+            var userRoles = _userService.GetUsersRoles(int.Parse(userId));
             var rolesId = new List<int>();
             foreach (var item in userRoles)
             {
@@ -74,10 +78,9 @@ namespace UserIdentity.Presentation.Attributes
             }
             if (!roles.Contains(_role))
             {
-                context.Result = new ForbidResult();
+                context.Result = new ObjectResult("Forbidden") { StatusCode = 403};
                 return;
             }
-
             
         }
     }
