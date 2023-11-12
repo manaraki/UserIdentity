@@ -47,7 +47,7 @@ namespace UserIdentity.Application.Services
                 token.Audience,                
                 claimsForToken,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddHours(1),
+                DateTime.UtcNow.AddHours(2),
                 signingCredentials);
 
             var Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
