@@ -7,8 +7,9 @@ using UserIdentity.Domain.Entities.Common;
 
 namespace UserIdentity.Domain.Entities.User
 {
-    public class UserRole: BaseEntity
-    {        
+    public class UserRole
+    {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public int RoleId { get; set; }
 
