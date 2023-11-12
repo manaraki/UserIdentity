@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserIdentity.Application.Common;
 using UserIdentity.Application.Dtos;
 using UserIdentity.Application.Interfaces;
 using UserIdentity.Domain.Entities.User;
@@ -21,7 +22,7 @@ namespace UserIdentity.Application.Services
             User user=new User()
             {
                 Username = addUserDto.Username,
-                Password = addUserDto.Password,                
+                Password = HashPassword.GetPasswordHash(addUserDto.Password)                
             };
             List<UserRole> userRoles = new List<UserRole>();
             foreach (var item in addUserDto.Roles)

@@ -24,10 +24,10 @@ namespace UserIdentity.Application.Services
             return await db.RoleRepository.GetByIdAsync(Id);
         }
 
-        public async Task<IEnumerable<UserRole>>? GetUsersRolesAsync(int userId)
+        public IEnumerable<UserRole>? GetUsersRoles(int userId)
         {
             //var roles = db.UserRoleRepository.GetAll(where = p => p.UserId == userId, includes = "Role");
-            return await db.UserRoleRepository.GetAllAsync(p => p.UserId == userId, null, "Role");
+            return db.UserRoleRepository.GetAll(p => p.UserId == userId, null, "Role");
             //UserRepository.GetAll()
             //.Include(user => user.UserRoles)
             //.ThenInclude(userRole => userRole.Role);
