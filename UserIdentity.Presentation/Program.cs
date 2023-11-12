@@ -5,7 +5,7 @@ using System.Text;
 using UserIdentity.Infra.Data.Contexts;
 using UserIdentity.Infra.Data.Repositories;
 using UserIdentity.Infra.Ioc;
-using UserIdentity.Presentation.Middlewares;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +58,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-//app.UseMiddleware<TokenValidationMiddleware>();
 
 app.UseRouting();
 
