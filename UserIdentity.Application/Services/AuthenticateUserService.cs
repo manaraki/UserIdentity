@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserIdentity.Application.Common;
 using UserIdentity.Application.Dtos;
 using UserIdentity.Application.Interfaces;
 using UserIdentity.Domain.Entities.User;
@@ -16,9 +17,10 @@ namespace UserIdentity.Application.Services
         UnitOfWork db = new UnitOfWork();
         public async Task<User> Execute(UserAuthenticateDto userAuthenticateDto)
         {
+            var username = userAuthenticateDto.Username;
+            var password = HashPassword.GetPasswordHash(userAuthenticateDto.Password);
             return await db.UserRepository.GetAsync(c =>
-            c.Username == userAuthenticateDto.Username &&
-            c.Password == RegisterUserService.GetPasswordHash(userAuthenticateDto.Password));
+            c.Username == username);
         }
 
     }
