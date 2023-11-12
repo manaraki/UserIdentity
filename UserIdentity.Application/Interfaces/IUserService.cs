@@ -11,7 +11,7 @@ namespace UserIdentity.Application.Interfaces
     {
         Task<User>? GetUserAsync(object userId);
         Task<Role> GetRoleAsync(object Id);        
-        Task<IEnumerable<UserRole>>? GetUsersRolesAsync(int userId);
+        IEnumerable<UserRole>? GetUsersRoles(int userId);
         //IEnumerable<Permission> GetUserPermissions(int roleId);
     }
 }
