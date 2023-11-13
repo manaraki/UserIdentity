@@ -43,8 +43,16 @@ namespace UserIdentity.Presentation.Controllers
             {
                 return BadRequest("Invalid Data");
             }
-
-            var userId=_registerUserService.Execute(userRegisterDto).Result;
+            int userId;
+            try
+            {
+                userId = _registerUserService.Execute(userRegisterDto).Result;
+            }
+            catch
+            {
+                return BadRequest("Invalid Data");
+            }
+            
             var response = new ApiResponse<RegisterApiResponse>
             {
                 Message = "Register successful",
