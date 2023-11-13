@@ -22,7 +22,7 @@ namespace UserIdentity.Application.Services
             User user = new User()
             {
                 Username = userRegisterDto.Username,           
-                Password = HashPassword.GetPasswordHash(userRegisterDto.Password)
+                Password = PasswordHelper.HashPassword(userRegisterDto.Password)
             };
             await db.UserRepository.InsertAsync(user);
             db.Save();

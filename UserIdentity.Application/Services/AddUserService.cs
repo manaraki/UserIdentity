@@ -22,7 +22,7 @@ namespace UserIdentity.Application.Services
             User user=new User()
             {
                 Username = addUserDto.Username,
-                Password = HashPassword.GetPasswordHash(addUserDto.Password)                
+                Password = PasswordHelper.HashPassword(addUserDto.Password)                
             };
             List<UserRole> userRoles = new List<UserRole>();
             foreach (var item in addUserDto.Roles)

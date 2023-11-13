@@ -8,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace UserIdentity.Application.Common
 {
-    public static class HashPassword
+    
+    public class PasswordHelper
     {
-        public static string GetPasswordHash(string password)
+        public static string HashPassword(string password)
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password!,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 256 / 8));
-            return hashed;
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashedBytes);
+            }
         }
     }
 }

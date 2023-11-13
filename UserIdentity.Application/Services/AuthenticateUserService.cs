@@ -18,9 +18,9 @@ namespace UserIdentity.Application.Services
         public async Task<User> Execute(UserAuthenticateDto userAuthenticateDto)
         {
             var username = userAuthenticateDto.Username;
-            var password = HashPassword.GetPasswordHash(userAuthenticateDto.Password);
+            var password = PasswordHelper.HashPassword(userAuthenticateDto.Password);
             return await db.UserRepository.GetAsync(c =>
-            c.Username == username);
+            c.Username == username && c.Password == password);
         }
 
     }
