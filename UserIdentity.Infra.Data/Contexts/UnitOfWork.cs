@@ -9,7 +9,7 @@ using UserIdentity.Infra.Data.Repositories;
 
 namespace UserIdentity.Infra.Data.Contexts
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork
     {
         DataContext db = new DataContext();
         private IGenericRepository<User> userRepository;
